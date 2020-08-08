@@ -1,6 +1,8 @@
 import csv
 import sys
 
+from blist import sortedlist
+
 from util import Node, QueueFrontier
 
 # Maps names to a set of corresponding person_ids
@@ -98,8 +100,9 @@ def shortest_path(source, target):
     frontier.add(first_node)
 
     # Visited people id list
-    visited = []
-    visited.append(source)
+    # Use of sorted list to make the algorithm faster
+    visited = sortedlist()
+    visited.add(source)
 
     while True:
         if frontier.empty():
@@ -112,21 +115,23 @@ def shortest_path(source, target):
         for movie, person in neighbors_for_person(parent_node.state):
             new_node = Node(person, parent_node, movie)
 
-            if person == target:
-                # Builds the list to return
+            # "in" operator for sortedlist has log^2(n) complexity
+            if not person in visited:
 
-                degrees = []
-                parent_node = new_node
+                if person == target:
+                    # Builds the list to return
+                    degrees = []
+                    parent_node = new_node
 
-                while parent_node.parent is not None:
-                    degrees.append((parent_node.action, parent_node.state))
-                    parent_node = parent_node.parent
+                    while parent_node.parent is not None:
+                        degrees.append((parent_node.action, parent_node.state))
+                        parent_node = parent_node.parent
 
-                degrees.reverse()
-                return degrees
+                    degrees.reverse()
+                    return degrees
 
-            if person not in visited and not frontier.contains_state(person):
                 frontier.add(new_node)
+                visited.add(person)
 
 
 def person_id_for_name(name):
