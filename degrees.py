@@ -2,8 +2,8 @@ import csv
 import sys
 
 from blist import sortedlist
-
 from util import Node, QueueFrontier
+
 
 # Maps names to a set of corresponding person_ids
 names = {}

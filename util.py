@@ -1,3 +1,4 @@
+
 class Node():
     def __init__(self, state, parent, action):
         self.state = state
@@ -16,7 +17,7 @@ class StackFrontier():
         return any(node.state == state for node in self.frontier)
 
     def empty(self):
-        return False if self.frontier else True
+        return len(self.frontier) == 0
 
     def remove(self):
         if self.empty():
