@@ -1,7 +1,6 @@
 import csv
 import sys
 
-from blist import sortedlist
 from util import Node, QueueFrontier
 
 
@@ -101,8 +100,8 @@ def shortest_path(source, target):
 
     # Visited people id list
     # Use of sorted list to make the algorithm faster
-    visited = sortedlist()
-    visited.add(source)
+    visited = []
+    visited.append(source)
 
     while True:
         if frontier.empty():
@@ -131,7 +130,7 @@ def shortest_path(source, target):
                     return degrees
 
                 frontier.add(new_node)
-                visited.add(person)
+                visited.append(person)
 
 
 def person_id_for_name(name):
